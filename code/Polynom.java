@@ -14,6 +14,11 @@ import Ex1Testing.Monom;
  */
 public class Polynom implements Polynom_able
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private ArrayList<Monom> Poly = new ArrayList<Monom>();
 	/**
 	 * Zero (empty polynom)
