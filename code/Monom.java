@@ -163,7 +163,8 @@ public class Monom implements function
 	}
 	private void set_coefficient(double a)
 	{
-		this._coefficient = a;
+		BigDecimal coef_2 = BigDecimal.valueOf(a);
+		this._coefficient=coef_2.doubleValue();
 	}
 	private void set_power(int p)
 	{
