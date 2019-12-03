@@ -73,7 +73,7 @@ public class Monom implements function
 			int pow=0;
 			double coef=0;
 			String t="";
-			if(s.charAt(i)=='0')
+			if(s.charAt(i)=='0'&& s.length()==1)
 			{
 				getNewZeroMonom();
 				return;

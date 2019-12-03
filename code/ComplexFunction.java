@@ -107,20 +107,55 @@ public class ComplexFunction implements complex_function
 	@Override
 	public function initFromString(String s) 
 	{
-		String Operator="",rightFunc="";
-		CFNode root=new CFNode();
+		//recursion stop conditions
 		if(!s.contains(",") && ( s.contains("+") || s.contains("-") ))
 			return new Polynom(s);
 		else if(!s.contains(",")) 
 			return new Monom(s);
-		int j=s.length()-2,k=0;
-		while(s.charAt(k)!='(')
+		
+		String Operator="",rightFunc="",leftFunc="",string="";
+		CFNode root=new CFNode();
+		int sLength=s.length()-1,k=0;
+		while(s.charAt(k)!='(') // chain the operator into operator
+		{
 			Operator+=s.charAt(k++);
-		while(s.charAt(j)!=',')
-			rightFunc+=s.charAt(j--);
-		root._right=initFromString(reverseString(rightFunc));
-		root._left=initFromString(s.substring(++k, j));
-		root._op= Operator=="" ?Operation.None:Operation.valueOf(Operator);
+		}
+		int leftCursor=k++;
+		while(s.charAt(k)!='(' && s.charAt(k) !=',')//chain the operator or left function to string
+		{
+			string+=s.charAt(k++);
+		}
+		switch(s.charAt(k))
+		{
+			case '(':
+			{
+				int counter=0;
+				boolean flag=true;
+				while(flag)
+				{
+					if(s.charAt(k)=='(')
+						counter++;
+					if(s.charAt(k)==')')
+						counter--;
+					string+=s.charAt(k++);
+					if(counter==0)
+						flag=false;
+				}
+				
+				leftFunc=s.substring(leftCursor,k);
+				rightFunc=s.substring(k,sLength);
+				root._op=Operation.valueOf(Operator);
+			}
+			case ',':
+			{
+				leftFunc=string;
+				rightFunc=s.substring(++k,sLength);
+				root._op=Operation.valueOf(Operator);
+			}
+			
+		}
+		root._left=initFromString(leftFunc);
+		root._right=initFromString(rightFunc);
 		return new ComplexFunction(root);
 	}
 	@Override
@@ -133,13 +168,6 @@ public class ComplexFunction implements complex_function
 	{
 		function f= initFromString(_root.toString());
 		return f;
-	}
-	//---------Auxiliary-reverse-String-Function--------------------
-	private String reverseString(String s)
-	{
-		StringBuilder input1 = new StringBuilder(); 
-		input1.append(s); 
-		return input1.reverse().toString();
 	}
 
 	//---------------Inner-Class-CpmplexFunction-Node------------
@@ -171,26 +199,26 @@ public class ComplexFunction implements complex_function
 		{
 			this._left = _left;
 		}
-		public function get_right()
+		function get_right()
 		{
 			return _right;
 		}
-		public void set_right(function _right) 
+		void set_right(function _right) 
 		{
 			this._right = _right;
 		}
-		public Operation get_op() 
+		Operation get_op() 
 		{
 			return _op;
 		}
-		public void set_op(Operation _op) 
+		void set_op(Operation _op) 
 		{
 			this._op = _op;
 		}
 		@Override
 		public String toString() 
 		{
-			if(_right!=null)
+			if(_right!=null && _op!= Operation.None) // i.e ComplexFunction
 				return  _op+"("+_left + ","+ _right +")";
 			return _left+"";
 		}

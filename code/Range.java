@@ -1,6 +1,7 @@
 package Ex1Testing;
 /**
  * This class represents a simple 1D range of shape [min,max]
+ * @author boaz_benmoshe
  *
  */
 public class Range 
