@@ -12,6 +12,10 @@ import java.util.Comparator;
  */
 public class Monom implements function
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public static final Monom ZERO = new Monom(0,0);
 	public static final Monom MINUS1 = new Monom(-1,0);
 	public static final double EPSILON = 0.0000001;
