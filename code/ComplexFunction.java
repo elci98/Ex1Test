@@ -3,9 +3,6 @@ package Ex1Testing;
 @SuppressWarnings("serial")
 public class ComplexFunction implements complex_function 
 {
-	/**
-	 * 
-	 */
 
 	private CFNode _root;
 
@@ -67,7 +64,7 @@ public class ComplexFunction implements complex_function
 	}
 
 	@Override
-	public void comp(function f1) 
+	public void comp(function f1) //composition
 	{
 		Operation op = Operation.Comp;
 		ComplexFunction tempCF = _root.get_right()!=null ? new ComplexFunction(_root.get_op(),_root.get_left(),_root.get_right()) : new ComplexFunction(_root.get_left());
@@ -100,6 +97,39 @@ public class ComplexFunction implements complex_function
 	@Override
 	public double f(double x) 
 	{
+		if(_root._right==null)
+			return _root._left.f(x);
+		switch(_root._op)
+		{
+		case Comp:
+		{
+			return _root._left.f(_root._right.f(x));
+		}
+		case Times:
+		{
+			return _root._left.f(x)*_root._right.f(x);
+		}
+		case Divid:
+		{
+			return _root._left.f(x)/_root._right.f(x);
+		}
+		case Plus:
+		{
+			return _root._left.f(x)+_root._right.f(x);
+		}
+		case Max:
+		{
+			return Math.max(_root._left.f(x),_root._right.f(x));
+		}
+		case Min:
+		{	
+			return Math.min(_root._left.f(x),_root._right.f(x));
+		}
+		default:
+		{
+			break;
+		}
+		}
 
 		return 0;
 	}
@@ -112,7 +142,7 @@ public class ComplexFunction implements complex_function
 			return new Polynom(s);
 		else if(!s.contains(",")) 
 			return new Monom(s);
-		
+
 		String Operator="",rightFunc="",leftFunc="",string="";
 		CFNode root=new CFNode();
 		int sLength=s.length()-1,k=0;
@@ -127,32 +157,32 @@ public class ComplexFunction implements complex_function
 		}
 		switch(s.charAt(k))
 		{
-			case '(':
+		case '(':
+		{
+			int counter=0;
+			boolean flag=true;
+			while(flag)
 			{
-				int counter=0;
-				boolean flag=true;
-				while(flag)
-				{
-					if(s.charAt(k)=='(')
-						counter++;
-					if(s.charAt(k)==')')
-						counter--;
-					string+=s.charAt(k++);
-					if(counter==0)
-						flag=false;
-				}
-				
-				leftFunc=s.substring(leftCursor,k);
-				rightFunc=s.substring(k,sLength);
-				root._op=Operation.valueOf(Operator);
+				if(s.charAt(k)=='(')
+					counter++;
+				if(s.charAt(k)==')')
+					counter--;
+				string+=s.charAt(k++);
+				if(counter==0)
+					flag=false;
 			}
-			case ',':
-			{
-				leftFunc=string;
-				rightFunc=s.substring(++k,sLength);
-				root._op=Operation.valueOf(Operator);
-			}
-			
+
+			leftFunc=s.substring(leftCursor,k);
+			rightFunc=s.substring(k,sLength);
+			root._op=Operation.valueOf(Operator);
+		}
+		case ',':
+		{
+			leftFunc=string;
+			rightFunc=s.substring(++k,sLength);
+			root._op=Operation.valueOf(Operator);
+		}
+
 		}
 		root._left=initFromString(leftFunc);
 		root._right=initFromString(rightFunc);
@@ -190,32 +220,19 @@ public class ComplexFunction implements complex_function
 			_right=right;
 			_op=op;
 		}
-		//---------------------Setters-& Getters--------------------- 
+		//---------------------Getters--------------------- 
 		function get_left() 
 		{
 			return _left;
-		}
-		void set_left(function _left) 
-		{
-			this._left = _left;
 		}
 		function get_right()
 		{
 			return _right;
 		}
-		void set_right(function _right) 
-		{
-			this._right = _right;
-		}
 		Operation get_op() 
 		{
 			return _op;
 		}
-		void set_op(Operation _op) 
-		{
-			this._op = _op;
-		}
-		@Override
 		public String toString() 
 		{
 			if(_right!=null && _op!= Operation.None) // i.e ComplexFunction

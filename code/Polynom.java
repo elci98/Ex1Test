@@ -260,7 +260,7 @@ public class Polynom implements Polynom_able
 		Polynom p=new Polynom("x^2+4x-4");
 		Polynom p1= new Polynom("x^2+4x-4");
 		p.substract(p1);
-		String expected="0";
+//		String expected="0";
 		String actual=p.toString();
 		System.out.println(actual);
 	}

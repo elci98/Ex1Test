@@ -42,28 +42,33 @@ class Functions_GUITest
 	}
 
 	//@Test
-	void testFunctions_GUI() {
+	void testFunctions_GUI() 
+	{
 	//	fail("Not yet implemented");
 	}
 
 	//@Test
-	void testInitFromFile() {
+	void testInitFromFile() 
+	{
 	//	fail("Not yet implemented");
 	}
 
 	//@Test
-	void testSaveToFile() {
+	void testSaveToFile() 
+	{
 	//	fail("Not yet implemented");
 	}
 
 	//@Test
-	void testDrawFunctions() {
+	void testDrawFunctions() 
+	{
 		//_data.drawFunctions();
 	//	fail("Not yet implemented");
 	}
 
 	@Test
-	void testDrawFunctionsIntIntRangeRangeInt() {
+	void testDrawFunctionsIntIntRangeRangeInt() 
+	{
 //		_data.drawFunctions();
 		//fail("Not yet implemented");
 	}
@@ -84,9 +89,14 @@ class Functions_GUITest
 		
 		ComplexFunction cf = new ComplexFunction(Operation.Plus, p1,p2);
 		ComplexFunction cf4 = new ComplexFunction(Operation.Divid, new Polynom("x +1"),cf3);
+		Polynom max =new Polynom("x^2+2");
+		ComplexFunction cf1 = new ComplexFunction(max);
+		System.out.println(cf1.f(2));
 		cf4.plus(new Monom("2"));
 		ans.add(cf.copy());
 		ans.add(cf4.copy());
+		function cf7 = cf3.initFromString("Times(Plus(Max(x+2,-x^2+x),x),x^2)");
+		System.out.println(cf4.f(9));
 		cf.div(p1);
 		ans.add(cf.copy());
 		String s = cf.toString();
