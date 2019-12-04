@@ -1,5 +1,7 @@
 package Ex1Testing;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.List;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -152,7 +154,6 @@ public class Functions_GUI implements functions
 	@Override
 	public void drawFunctions(int width, int height, Range rx, Range ry, int resolution) 
 	{
-
 	}
 
 	@Override

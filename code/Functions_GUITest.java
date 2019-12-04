@@ -26,29 +26,34 @@ class Functions_GUITest
 {
 	public static void main(String[] a) 
 	{
-		Functions_GUI data = new Functions_GUI();
-		int w=1000, h=600, res=200;
-		Range rx = new Range(-10,10);
-		Range ry = new Range(-5,15);
-		data.drawFunctions(w,h,rx,ry,res);
-		try
-		{
-			data.initFromFile("C:\\Users\\אלחנן מהצרי\\eclipse-workspace\\OOP\\Ex1\\function_file.txt");
-		}
-		catch(IOException e)
-		{
-			e.printStackTrace();
-		}
-		System.out.println(data);
-		String fileName="functions.txt";
-		try 
-		{
-			data.saveToFile(fileName);
-		}
-		catch(IOException e)
-		{
-			e.printStackTrace();
-		}
+				Functions_GUI data = new Functions_GUI();
+				Polynom p = new Polynom("x^2");
+				data.add(p);
+				Range rx = new Range(-5,5);
+				Range ry = new Range(-5,5);
+				data.drawFunctions(500, 500, rx, ry, 1);
+		//		int w=1000, h=600, res=200;
+		//		Range rx = new Range(-10,10);
+		//		Range ry = new Range(-5,15);
+		//		data.drawFunctions(w,h,rx,ry,res);
+		//		try
+		//		{
+		//			data.initFromFile("C:\\Users\\אלחנן מהצרי\\eclipse-workspace\\OOP\\Ex1\\function_file.txt");
+		//		}
+		//		catch(IOException e)
+		//		{
+		//			e.printStackTrace();
+		//		}
+		//		System.out.println(data);
+		//		String fileName="functions.txt";
+		//		try 
+		//		{
+		//			data.saveToFile(fileName);
+		//		}
+		//		catch(IOException e)
+		//		{
+		//			e.printStackTrace();
+		//		}
 	}
 
 	private Functions_GUI _data=null;

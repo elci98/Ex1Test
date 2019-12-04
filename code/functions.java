@@ -22,12 +22,12 @@ public interface functions extends Collection<function>
 	public void saveToFile(String file) throws IOException;
 /**
  * Draws all the functions in the collection in a GUI window using the
- * given parameters for the GUI windo and the range & resolution
+ * given parameters for the GUI window and the range & resolution
  * @param width - the width of the window - in pixels
  * @param height - the height of the window - in pixels
  * @param rx - the range of the horizontal axis
  * @param ry - the range of the vertical axis
- * @param resolution - the number of samples with in rx: the X_step = rx/resulution
+ * @param resolution - the number of samples with in rx: the X_step = rx/resolution
  */
 	public void drawFunctions(int width, int height, Range rx, Range ry, int resolution);
 /**
