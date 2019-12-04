@@ -1,5 +1,7 @@
 package Ex1Testing;
 
+import java.io.IOException;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -24,16 +26,35 @@ class Functions_GUITest
 {
 	public static void main(String[] a) 
 	{
-		Functions_GUI data = FunctionsFactory();
+		Functions_GUI data = new Functions_GUI();
 		int w=1000, h=600, res=200;
 		Range rx = new Range(-10,10);
 		Range ry = new Range(-5,15);
 		data.drawFunctions(w,h,rx,ry,res);
+		try
+		{
+			data.initFromFile("C:\\Users\\אלחנן מהצרי\\eclipse-workspace\\OOP\\Ex1\\function_file.txt");
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+		System.out.println(data);
+		String fileName="functions.txt";
+		try 
+		{
+			data.saveToFile(fileName);
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
 	}
+
 	private Functions_GUI _data=null;
-//	@BeforeAll
-//	static void setUpBeforeClass() throws Exception {
-//	}
+	//	@BeforeAll
+	//	static void setUpBeforeClass() throws Exception {
+	//	}
 
 	@BeforeEach
 	void setUp() throws Exception 
@@ -44,32 +65,32 @@ class Functions_GUITest
 	//@Test
 	void testFunctions_GUI() 
 	{
-	//	fail("Not yet implemented");
+		//	fail("Not yet implemented");
 	}
 
 	//@Test
 	void testInitFromFile() 
 	{
-	//	fail("Not yet implemented");
+		//	fail("Not yet implemented");
 	}
 
 	//@Test
 	void testSaveToFile() 
 	{
-	//	fail("Not yet implemented");
+		//	fail("Not yet implemented");
 	}
 
 	//@Test
 	void testDrawFunctions() 
 	{
 		//_data.drawFunctions();
-	//	fail("Not yet implemented");
+		//	fail("Not yet implemented");
 	}
 
 	@Test
 	void testDrawFunctionsIntIntRangeRangeInt() 
 	{
-//		_data.drawFunctions();
+		//		_data.drawFunctions();
 		//fail("Not yet implemented");
 	}
 	public static Functions_GUI FunctionsFactory() 
@@ -86,17 +107,17 @@ class Functions_GUITest
 		{
 			cf3.mul(new Polynom(s3[i]));
 		}
-		
-		ComplexFunction cf = new ComplexFunction(Operation.Plus, p1,p2);
-		ComplexFunction cf4 = new ComplexFunction(Operation.Divid, new Polynom("x +1"),cf3);
+
+		ComplexFunction cf = new ComplexFunction("plus", p1,p2);
+		ComplexFunction cf4 = new ComplexFunction("div", new Polynom("x +1"),cf3);
 		Polynom max =new Polynom("x^2+2");
 		ComplexFunction cf1 = new ComplexFunction(max);
 		System.out.println(cf1.f(2));
 		cf4.plus(new Monom("2"));
 		ans.add(cf.copy());
 		ans.add(cf4.copy());
-		function cf7 = cf3.initFromString("Times(Plus(Max(x+2,-x^2+x),x),x^2)");
-		System.out.println(cf4.f(9));
+		function cf7 = cf3.initFromString("");
+		System.out.println(cf7.f(9));
 		cf.div(p1);
 		ans.add(cf.copy());
 		String s = cf.toString();
@@ -104,15 +125,15 @@ class Functions_GUITest
 		function cf6 = cf4.initFromString(s2);
 		ans.add(cf5.copy());
 		ans.add(cf6.copy());
-//		ComplexFunction max = new ComplexFunction(ans.get(0).copy());
-//		ComplexFunction min = new ComplexFunction(ans.get(0).copy());
-//		for(int i=1;i<ans.size();i++) {
-//			max.max(ans.get(i));
-//			min.min(ans.get(i));
-//		}
-//		ans.add(max);
-//		ans.add(min);
-//		
+		//		ComplexFunction max = new ComplexFunction(ans.get(0).copy());
+		//		ComplexFunction min = new ComplexFunction(ans.get(0).copy());
+		//		for(int i=1;i<ans.size();i++) {
+		//			max.max(ans.get(i));
+		//			min.min(ans.get(i));
+		//		}
+		//		ans.add(max);
+		//		ans.add(min);
+		//		
 		return ans;
 	}
 }
