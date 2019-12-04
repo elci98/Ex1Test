@@ -1,7 +1,13 @@
 package Ex1Testing;
 
 import java.awt.List;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -116,21 +122,36 @@ public class Functions_GUI implements functions
 	@Override
 	public void initFromFile(String file) throws IOException 
 	{
-		// TODO Auto-generated method stub
-
+		BufferedReader buffer = new BufferedReader(new FileReader(file));
+		String line="";
+		ComplexFunction cf=new ComplexFunction(new Monom("0"));
+		while((line = buffer.readLine())!=null)
+		{
+			function f= cf.initFromString(line);
+			collection.add(f);
+		}
+		buffer.close();
 	}
 
 	@Override
 	public void saveToFile(String file) throws IOException 
 	{
-		// TODO Auto-generated method stub
+		File file1 = new File(file);
+		file1.createNewFile();
+		BufferedWriter buffer = new BufferedWriter(new FileWriter(file1));
+		Iterator<function> i = collection.iterator();
+		while(i.hasNext())
+		{
+			function f= i.next();
+			buffer.write(f.toString()+"\n");
 
+		}
+		buffer.close();	
 	}
 
 	@Override
 	public void drawFunctions(int width, int height, Range rx, Range ry, int resolution) 
 	{
-		// TODO Auto-generated method stub
 
 	}
 

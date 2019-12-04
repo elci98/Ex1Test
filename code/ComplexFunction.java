@@ -14,9 +14,11 @@ public class ComplexFunction implements complex_function
 	{
 		_root=new CFNode(left);
 	}
-	public ComplexFunction(Operation Operator,function left,function right)
+	public ComplexFunction(String Operator,function left,function right)
 	{
-		_root=new CFNode(Operator,left,right);
+		Operator=ConvertOp(Operator);
+		Operation operator=Operation.valueOf(Operator);
+		_root=new CFNode(operator,left,right);
 	}
 	@Override
 	public void plus(function f1) 
@@ -91,7 +93,7 @@ public class ComplexFunction implements complex_function
 	public Operation getOp() 
 	{
 		if(_root.get_op()!=null)
-			return _root.get_op();
+			return Operation.valueOf(_root.get_op());
 		return null;
 	}
 	@Override
@@ -172,15 +174,19 @@ public class ComplexFunction implements complex_function
 					flag=false;
 			}
 
-			leftFunc=s.substring(leftCursor,k);
-			rightFunc=s.substring(k,sLength);
+			leftFunc=string;
+			rightFunc=s.substring(++k,sLength);
+			Operator=ConvertOp(Operator);
 			root._op=Operation.valueOf(Operator);
+			break;
 		}
 		case ',':
 		{
 			leftFunc=string;
 			rightFunc=s.substring(++k,sLength);
+			Operator=ConvertOp(Operator);
 			root._op=Operation.valueOf(Operator);
+			break;
 		}
 
 		}
@@ -188,6 +194,7 @@ public class ComplexFunction implements complex_function
 		root._right=initFromString(rightFunc);
 		return new ComplexFunction(root);
 	}
+
 	@Override
 	public String toString()
 	{
@@ -199,9 +206,40 @@ public class ComplexFunction implements complex_function
 		function f= initFromString(_root.toString());
 		return f;
 	}
-
+	private String ConvertOp(String Operator) 
+	{
+		switch(Operator)
+		{
+		case "comp":
+		{
+			return "Comp";
+		}
+		case "mul":
+		{
+			return "Times";
+		}
+		case "div":
+		{
+			return "Divid";
+		}
+		case "plus":
+		{
+			return "Plus";
+		}
+		case "max":
+		{
+			return "Max";
+		}
+		case "min":
+		{	
+			return "Min";
+		}
+		default:
+			return "None";
+	}
+	}
 	//---------------Inner-Class-CpmplexFunction-Node------------
-	private class CFNode 
+	private static class CFNode 
 	{
 		private function _left=null,_right=null;
 		private Operation _op=Operation.None;
@@ -229,9 +267,9 @@ public class ComplexFunction implements complex_function
 		{
 			return _right;
 		}
-		Operation get_op() 
+		String get_op() 
 		{
-			return _op;
+			return _op.toString();
 		}
 		public String toString() 
 		{
