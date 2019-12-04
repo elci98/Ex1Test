@@ -152,7 +152,6 @@ public class ComplexFunction implements complex_function
 		{
 			Operator+=s.charAt(k++);
 		}
-		int leftCursor=k++;
 		while(s.charAt(k)!='(' && s.charAt(k) !=',')//chain the operator or left function to string
 		{
 			string+=s.charAt(k++);
