@@ -1,13 +1,10 @@
 package Ex1Testing;
 
 import java.io.IOException;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import Ex1Testing.ComplexFunction;
 import Ex1Testing.Functions_GUI;
-import Ex1Testing.Range;
 import Ex1Testing.function;
 /**
  * Partial JUnit + main test for the GUI_Functions class, expected output from the main:
@@ -26,16 +23,23 @@ class Functions_GUITest
 {
 	public static void main(String[] a) 
 	{
-				Functions_GUI data = new Functions_GUI();
-				Polynom p = new Polynom("x^2");
-				data.add(p);
-				Range rx = new Range(-5,5);
-				Range ry = new Range(-5,5);
-				data.drawFunctions(500, 500, rx, ry, 1);
-		//		int w=1000, h=600, res=200;
-		//		Range rx = new Range(-10,10);
-		//		Range ry = new Range(-5,15);
-		//		data.drawFunctions(w,h,rx,ry,res);
+//		Functions_GUI data=FunctionsFactory();
+		Functions_GUI data= new Functions_GUI();
+		Polynom p = new Polynom("x^2");
+		Polynom p1 = new Polynom("x^2");
+		Polynom p2 = new Polynom("x^1");
+		Polynom p3 = new Polynom("x^3-4x+8");
+		Polynom p4 = new Polynom("x^9-2x^4");
+		Polynom p5 = new Polynom("x^3");
+		data.add(p);
+		data.add(p1);
+		data.add(p2);
+		data.add(p3);
+		data.add(p4);
+		data.add(p5);
+		//				System.out.println(c.equals(p1, -3, 3, 0.1));
+
+
 		//		try
 		//		{
 		//			data.initFromFile("C:\\Users\\אלחנן מהצרי\\eclipse-workspace\\OOP\\Ex1\\function_file.txt");
@@ -44,6 +48,11 @@ class Functions_GUITest
 		//		{
 		//			e.printStackTrace();
 		//		}
+		System.out.println(data);
+		//				Range rx = new Range(-10,10);
+		//				Range ry = new Range(-10,10);
+		//				data.drawFunctions(750, 750, rx, ry, 20);
+		data.drawFunctions("Ex1//GUI_params.txt");
 		//		System.out.println(data);
 		//		String fileName="functions.txt";
 		//		try 
@@ -55,7 +64,6 @@ class Functions_GUITest
 		//			e.printStackTrace();
 		//		}
 	}
-
 	private Functions_GUI _data=null;
 	//	@BeforeAll
 	//	static void setUpBeforeClass() throws Exception {
@@ -76,13 +84,27 @@ class Functions_GUITest
 	//@Test
 	void testInitFromFile() 
 	{
-		//	fail("Not yet implemented");
+		try
+		{
+			_data.initFromFile("C:\\Users\\אלחנן מהצרי\\eclipse-workspace\\OOP\\Ex1\\function_file.txt");
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	//@Test
 	void testSaveToFile() 
 	{
-		//	fail("Not yet implemented");
+		try
+		{
+			_data.initFromFile("C:\\Users\\אלחנן מהצרי\\eclipse-workspace\\OOP\\Ex1\\function_file.txt");
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	//@Test
@@ -114,18 +136,17 @@ class Functions_GUITest
 		}
 
 		ComplexFunction cf = new ComplexFunction("plus", p1,p2);
-		ComplexFunction cf4 = new ComplexFunction("div", new Polynom("x +1"),cf3);
+		ComplexFunction cf4 = new ComplexFunction("div", new Polynom("x+1"),cf3);
 		Polynom max =new Polynom("x^2+2");
 		ComplexFunction cf1 = new ComplexFunction(max);
 		System.out.println(cf1.f(2));
 		cf4.plus(new Monom("2"));
 		ans.add(cf.copy());
 		ans.add(cf4.copy());
-		function cf7 = cf3.initFromString("");
+		function cf7 = cf3.initFromString("x^6");
 		System.out.println(cf7.f(9));
 		cf.div(p1);
 		ans.add(cf.copy());
-		String s = cf.toString();
 		function cf5 = cf4.initFromString(s1);
 		function cf6 = cf4.initFromString(s2);
 		ans.add(cf5.copy());
