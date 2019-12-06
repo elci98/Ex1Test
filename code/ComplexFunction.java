@@ -24,7 +24,7 @@ public class ComplexFunction implements complex_function
 	public void plus(function f1) 
 	{
 		Operation op = Operation.Plus;
-		ComplexFunction tempCF = _root.get_right()!=null ? new ComplexFunction(_root.get_op(),_root.get_left(),_root.get_right()) : new ComplexFunction(_root.get_left());
+		ComplexFunction tempCF = _root.get_right()!=null? new ComplexFunction(_root.get_op(),_root.get_left(),_root.get_right()) : new ComplexFunction(_root.get_left());
 		CFNode tempNode=new CFNode(op,tempCF,f1);
 		_root=tempNode;
 	}
@@ -152,10 +152,12 @@ public class ComplexFunction implements complex_function
 		{
 			Operator+=s.charAt(k++);
 		}
+		k++;
 		while(s.charAt(k)!='(' && s.charAt(k) !=',')//chain the operator or left function to string
 		{
 			string+=s.charAt(k++);
 		}
+		
 		switch(s.charAt(k))
 		{
 		case '(':
@@ -237,6 +239,22 @@ public class ComplexFunction implements complex_function
 			return "None";
 	}
 	}
+	/*
+	 * equals function compares current function f(x) values to f1(x) values between closed interval [x0,x1]
+	 *         when x belongs to [x0,x1] and we increase x`s value by step value
+	 * */
+	public boolean equals(function f1,double x0,double x1,double step)
+	{
+		if(x0>=x1)throw new RuntimeException("x0`s value must be smaller then x1!!" );
+		if(step>(x1-x0)/2)throw new RuntimeException("step value must be <= (x1-x0)/2");
+		while(x0<=x1)
+		{
+			if(this.f(x0)!=f1.f(x0))
+				return false;
+			x0+=step;
+		}
+		return true;
+	}
 	//---------------Inner-Class-CpmplexFunction-Node------------
 	private static class CFNode 
 	{
@@ -268,13 +286,45 @@ public class ComplexFunction implements complex_function
 		}
 		String get_op() 
 		{
-			return _op.toString();
+			return ConvertOpString(_op);
 		}
 		public String toString() 
 		{
 			if(_right!=null && _op!= Operation.None) // i.e ComplexFunction
-				return  _op+"("+_left + ","+ _right +")";
+				return  ConvertOpString(_op)+"("+_left + ","+ _right +")";
 			return _left+"";
+		}
+		private String ConvertOpString(Operation op) 
+		{
+			switch(op)
+			{
+			case Comp:
+			{
+				return "comp";
+			}
+			case Times:
+			{
+				return "mul";
+			}
+			case Divid:
+			{
+				return "div";
+			}
+			case Plus:
+			{
+				return "plus";
+			}
+			case Max:
+			{
+				return "max";
+			}
+			case Min:
+			{	
+				return "min";
+			}
+			default:
+				return "None";
+		}
 		}
 	}
 
