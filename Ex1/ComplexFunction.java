@@ -1,4 +1,4 @@
-package Ex1Testing;
+package Ex1;
 
 @SuppressWarnings("serial")
 public class ComplexFunction implements complex_function 
@@ -113,6 +113,7 @@ public class ComplexFunction implements complex_function
 		}
 		case Divid:
 		{
+			if(_root._right.f(x)==0) throw new IllegalArgumentException("divisor is 0");
 			return _root._left.f(x)/_root._right.f(x);
 		}
 		case Plus:
