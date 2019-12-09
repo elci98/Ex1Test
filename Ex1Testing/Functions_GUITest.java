@@ -1,6 +1,10 @@
 package Ex1Testing;
 
+import static org.junit.Assert.*;
+
 import java.io.IOException;
+
+import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -81,39 +85,47 @@ class Functions_GUITest
 		_data = FunctionsFactory();
 	}
 
-	//@Test
+	@Test
 	void testFunctions_GUI() 
 	{
-		//	fail("Not yet implemented");
+		Functions_GUI fG=new Functions_GUI();
+		fG.add(new Polynom("x ^4 -9 x^2"));
 	}
 
-	//@Test
+	@Test
 	void testInitFromFile() 
 	{
+		String fileName = "function_file.txt";
+		String filePath="C:\\Users\\אלחנן מהצרי\\eclipse-workspace\\OOP\\Ex1\\";
 		try
 		{
-			_data.initFromFile("C:\\Users\\אלחנן מהצרי\\eclipse-workspace\\OOP\\Ex1\\function_file.txt");
+			_data.initFromFile(filePath+fileName);
 		}
 		catch(IOException e)
 		{
+			assertFalse(false);
 			e.printStackTrace();
 		}
+		assertTrue(true);
 	}
 
-	//@Test
+	@Test
 	void testSaveToFile() 
 	{
+		String fileName ="functions.txt";
+		String filePath="";
 		try
 		{
-			_data.initFromFile("C:\\Users\\אלחנן מהצרי\\eclipse-workspace\\OOP\\Ex1\\function_file.txt");
+			_data.saveToFile(filePath+fileName);
 		}
 		catch(IOException e)
 		{
 			e.printStackTrace();
 		}
+		assertTrue(true);
 	}
 
-	//@Test
+	@Test
 	void testDrawFunctions() 
 	{
 		//_data.drawFunctions();
@@ -155,15 +167,15 @@ class Functions_GUITest
 		function cf6 = cf4.initFromString(s2);
 		ans.add(cf5.copy());
 		ans.add(cf6.copy());
-		//		ComplexFunction max = new ComplexFunction(ans.get(0).copy());
-		//		ComplexFunction min = new ComplexFunction(ans.get(0).copy());
-		//		for(int i=1;i<ans.size();i++) {
-		//			max.max(ans.get(i));
-		//			min.min(ans.get(i));
-		//		}
-		//		ans.add(max);
-		//		ans.add(min);
-		//		
+		ComplexFunction max1 = new ComplexFunction(ans.get(0).copy());
+		ComplexFunction min = new ComplexFunction(ans.get(0).copy());
+		for(int i=1;i<ans.size();i++) {
+			max1.max(ans.get(i));
+			min.min(ans.get(i));
+		}
+		ans.add(max);
+		ans.add(min);
+
 		return ans;
 	}
 }

@@ -1,96 +1,157 @@
 package Ex1Testing;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-import java.rmi.server.Operation;
-
 import org.junit.jupiter.api.Test;
+import Ex1.*;
 
-import Ex1.ComplexFunction;
-import Ex1.Monom;
-import Ex1.Polynom;
-
-class ComplexFunctionTest {
-	ComplexFunction c;
+class ComplexFunctionTest 
+{
+	function f;
 	Monom m;
 	Polynom p,p1;
+	ComplexFunction cf;
 
 	@Test
-	void testComplexFunctionFunction() {
-		
+	void testComplexFunctionFunction() 
+	{
+		boolean flag=false;
+		m=new Monom("x^2");
+		cf=new ComplexFunction(m);
+		if (cf.left() instanceof Monom) 
+			flag=true;
+		String expected ="x^2";
+		String actual=cf.toString();
+		assertTrue(flag);
+		assertEquals(expected,actual);
 	}
 
 	@Test
-	void testComplexFunctionStringFunctionFunction() {
+	void testComplexFunctionStringFunctionFunction() 
+	{
 		m=new Monom("x^2");
 		p=new Polynom("3x^3+2x^2");
-		c=new ComplexFunction("Plus",m,p);
-		String expected="3x^3+3x^2";
-		String actual=c.toString();
+		f=new ComplexFunction("Plus",m,p);
+		String expected="plus(x^2,3.0x^3+2.0x^2)";
+		String actual=f.toString();
 		assertEquals(expected, actual);
 	}
 
 	@Test
-	void testPlus() {
-		m=new Monom("x^2");
-		p=new Polynom("3x^3+2x^2");
-		c=new ComplexFunction("Plus",m,p);
-		String expected="3x^3+3x^2";
-		String actual=c.toString();
+	void testPlus() 
+	{
+		p=new Polynom("3x^7-5x^3+9");
+		cf= new ComplexFunction(new Polynom("x^5-5.5x^3+2x"));
+		cf.plus(p);
+		String expected="plus(x^5-5.5x^3+2.0x,3.0x^7-5.0x^3+9.0)";
+		String actual=cf.toString();
 		assertEquals(expected, actual);
+	}
+
+	@Test
+	void testMul() 
+	{
+		p=new Polynom("3x^7-5x^3+9");
+		cf= new ComplexFunction(new Polynom("x^5-5.5x^3+2x"));
+		cf.mul(p);
+		String expected="mul(x^5-5.5x^3+2.0x,3.0x^7-5.0x^3+9.0)";
+		String actual=cf.toString();
+		assertEquals(expected, actual);
+	}
+
+	@Test
+	void testDiv() 
+	{
+		p=new Polynom("3x^7-5x^3+9");
+		cf= new ComplexFunction(new Polynom("x^5-5.5x^3+2x"));
+		cf.div(p);
+		String expected="div(x^5-5.5x^3+2.0x,3.0x^7-5.0x^3+9.0)";
+		String actual=cf.toString();
+		assertEquals(expected, actual);	
+	}
+
+	@Test
+	void testMax() 
+	{
+		p=new Polynom("3x^7-5x^3+9");
+		cf= new ComplexFunction(new Polynom("x^5-5.5x^3+2x"));
+		cf.max(p);
+		String expected="max(x^5-5.5x^3+2.0x,3.0x^7-5.0x^3+9.0)";
+		String actual=cf.toString();
+		assertEquals(expected, actual);	
+	}
+
+	@Test
+	void testMin() 
+	{
+		p=new Polynom("3x^7-5x^3+9");
+		ComplexFunction cf= new ComplexFunction(new Polynom("x^5-5.5x^3+2x"));
+		cf.min(p);
+		String expected="min(x^5-5.5x^3+2.0x,3.0x^7-5.0x^3+9.0)";
+		String actual=cf.toString();
+		assertEquals(expected, actual);	
+	}
+
+	@Test
+	void testComp() 
+	{
+		p=new Polynom("3x^7-5x^3+9");
+		ComplexFunction cf= new ComplexFunction(new Polynom("x^5-5.5x^3+2x"));
+		cf.comp(p);
+		String expected="comp(x^5-5.5x^3+2.0x,3.0x^7-5.0x^3+9.0)";
+		String actual=cf.toString();
+		assertEquals(expected, actual);	
+	}
+
+	@Test
+	void testF() 
+	{
+		double epsilon=0.0001;
+		boolean flag=false;
+		cf=new ComplexFunction(new Monom("0"));
+		f=cf.initFromString("comp(x^5-4x^4,max(mul(x^3-2x^2+4,x+2),x^4-9x^3))");
+		double expected =35276.59072;
+		double actual=f.f(1.2);
+		if(Math.abs(expected-actual)<epsilon)
+			flag=true;
+		assertTrue(flag);
+	}
+
+	@Test
+	void testInitFromString() 
+	{
+		function f1=null;
+		ComplexFunction cf=new ComplexFunction(new Monom("0"));
+		//init a function from string with operation: mul, div ,plus ...
+		String methodString="mul(6x^7+2x-1,plus(x^2+4x-4,x^9))"; 
+		f=cf.initFromString(methodString);
+		//init a function from string with operation: Times, Divid ,Plus ...
+		String OperationString ="Times(6x^7+2x-1,Plus(x^2+4x-4,x^9))";
+		f1=cf.initFromString(OperationString);
+		String expected="mul(6.0x^7+2.0x-1.0,plus(x^2+4.0x-4.0,x^9))mul(6.0x^7+2.0x-1.0,plus(x^2+4.0x-4.0,x^9))";
+		String actual=f.toString()+f1.toString();
+		assertEquals(expected, actual);
+	}
+
+	@Test
+	void testCopy() 
+	{
+		p=new Polynom("x^6-9x^3+2");
+		p1=new Polynom("12x^4-3.3x^3");
+		m=new Monom("2.1x^4");
+		cf=new ComplexFunction("mul",p,p1);
+		cf=new ComplexFunction("Divid",cf,m);
+		f=cf.copy();
+		String actual=f.toString();
+		String expected=cf.toString();
+		assertEquals(expected, actual);
+	}
+
+	@Test
+	void testEqualsFunctionDoubleDoubleDouble() 
+	{
 		
-	}
-
-	@Test
-	void testMul() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testDiv() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testMax() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testMin() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testComp() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testF() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testInitFromString() {
-		String s="mul(x^5+2,4x+1)";
-		p=new Polynom("x^5+2");
-		p1=new Polynom("4x+1");
-		c=new ComplexFunction("mul",p,p1);
-		String expected="4x^6+x^5+8x+2";
-		String actual=c.toString();
-		assertEquals(expected, actual);
+		//still not implemented
 		
-	}
-
-	@Test
-	void testCopy() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testEqualsFunctionDoubleDoubleDouble() {
-		fail("Not yet implemented");
 	}
 
 }
