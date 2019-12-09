@@ -84,7 +84,8 @@ public class Monom implements function
 			}
 			while(i<s.length()&& s.charAt(i)< 58 && s.charAt(i)> 47 ||i<s.length()&& s.charAt(i)=='.')
 			{
-				t+=s.charAt(i++);
+				if(s.charAt(i)!=' ')
+					t+=s.charAt(i++);
 			}
 			if(t!="")
 			{
@@ -103,7 +104,9 @@ public class Monom implements function
 				t="";
 				while(i<s.length())
 				{
-					t+=s.charAt(i++);
+					if(s.charAt(i)!=' ' && s.charAt(i)!='^')
+						t+=s.charAt(i);
+					i++;
 				}
 				Integer d = Integer.parseInt(t);
 				pow=d;
