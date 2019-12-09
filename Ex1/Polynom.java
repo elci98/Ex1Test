@@ -1,9 +1,9 @@
-package Ex1Testing;
+package Ex1;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import Ex1Testing.Monom;
+import Ex1.Monom;
 /**
  * This class represents a Polynom with add, multiply functionality, it also should support the following:
  * 1. Riemann's Integral: https://en.wikipedia.org/wiki/Riemann_integral

@@ -3,9 +3,13 @@ package Ex1Testing;
 import java.io.IOException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import Ex1Testing.ComplexFunction;
-import Ex1Testing.Functions_GUI;
-import Ex1Testing.function;
+
+import Ex1.ComplexFunction;
+import Ex1.Functions_GUI;
+import Ex1.Monom;
+import Ex1.Polynom;
+import Ex1.Range;
+import Ex1.function;
 /**
  * Partial JUnit + main test for the GUI_Functions class, expected output from the main:
  * 0) java.awt.Color[r=0,g=0,b=255]  f(x)= plus(-1.0x^4 +2.4x^2 +3.1,+0.1x^5 -1.2999999999999998x +5.0)
@@ -23,20 +27,20 @@ class Functions_GUITest
 {
 	public static void main(String[] a) 
 	{
-//		Functions_GUI data=FunctionsFactory();
-		Functions_GUI data= new Functions_GUI();
-		Polynom p = new Polynom("x^2");
-		Polynom p1 = new Polynom("x^2");
-		Polynom p2 = new Polynom("x^1");
-		Polynom p3 = new Polynom("x^3-4x+8");
-		Polynom p4 = new Polynom("x^9-2x^4");
-		Polynom p5 = new Polynom("x^3");
-		data.add(p);
-		data.add(p1);
-		data.add(p2);
-		data.add(p3);
-		data.add(p4);
-		data.add(p5);
+		Functions_GUI data=FunctionsFactory();
+		//				Functions_GUI data= new Functions_GUI();
+		//		Polynom p = new Polynom("x^2");
+		//		Polynom p1 = new Polynom("x^9");
+		//		Polynom p2 = new Polynom("x^1");
+		//		Polynom p3 = new Polynom("x^3-4x+8");
+		//		Polynom p4 = new Polynom("x^9-2x^4");
+		//		Polynom p5 = new Polynom("x^3");
+		//		data.add(p);
+		//		data.add(p1);
+		//		data.add(p2);
+		//		data.add(p3);
+		//		data.add(p4);
+		//		data.add(p5);
 		//				System.out.println(c.equals(p1, -3, 3, 0.1));
 
 
@@ -48,11 +52,13 @@ class Functions_GUITest
 		//		{
 		//			e.printStackTrace();
 		//		}
-		System.out.println(data);
-		//				Range rx = new Range(-10,10);
-		//				Range ry = new Range(-10,10);
-		//				data.drawFunctions(750, 750, rx, ry, 20);
-		data.drawFunctions("Ex1//GUI_params.txt");
+		//		System.out.println(data);
+		int w=1000, h=600, res=1000;
+		Range rx = new Range(-10,10);
+		Range ry = new Range(-5,15);
+		data.drawFunctions(w,h,rx,ry,res);
+		System.out.println(data.get(1).f(4.01));
+		//data.drawFunctions("Ex1//GUI_params.json");
 		//		System.out.println(data);
 		//		String fileName="functions.txt";
 		//		try 
@@ -139,12 +145,10 @@ class Functions_GUITest
 		ComplexFunction cf4 = new ComplexFunction("div", new Polynom("x+1"),cf3);
 		Polynom max =new Polynom("x^2+2");
 		ComplexFunction cf1 = new ComplexFunction(max);
-		System.out.println(cf1.f(2));
 		cf4.plus(new Monom("2"));
 		ans.add(cf.copy());
 		ans.add(cf4.copy());
 		function cf7 = cf3.initFromString("x^6");
-		System.out.println(cf7.f(9));
 		cf.div(p1);
 		ans.add(cf.copy());
 		function cf5 = cf4.initFromString(s1);

@@ -1,5 +1,5 @@
 
-package Ex1Testing;
+package Ex1;
 
 import java.math.BigDecimal;
 import java.util.Comparator;
