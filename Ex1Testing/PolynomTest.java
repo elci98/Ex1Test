@@ -2,17 +2,21 @@ package Ex1Testing;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.shadow.com.univocity.parsers.annotations.Parsed;
 
 import Ex1.Monom;
 import Ex1.Polynom;
 import Ex1.Polynom_able;
-
+import Ex1.Monom;
 class PolynomTest 
 {
 	
 	Polynom p;
 	Polynom_able p1;
+	
+	
 	@Test
 	void testPolynom() 
 	{
@@ -43,10 +47,19 @@ class PolynomTest
 	@Test
 	void testF() 
 	{
+		double eps=0.0001;
 		p=new Polynom("6x-12x^5+19x^10+0x+9.2x^1");
-		double actual=p.f(5);
-		double expected=185509451;
-		assertEquals(expected,actual);
+		Polynom p1=new Polynom("49881.05746");;
+		p.f(2.2);
+		p.substract(p1);
+		boolean flag=false;
+		if(p.f(1)<eps)
+		{
+			flag=true;
+		}
+		
+		//assertEquals(19102.4,p.f(2));
+		assertTrue(flag);
 	}
 
 	@Test
@@ -63,23 +76,22 @@ class PolynomTest
 	@Test
 	void testAddMonom() 
 	{
-		p=new Polynom("x^2+4x-4");
-		Monom m=new Monom("3x^5");
-		p.add(m);
-		String expected="3.0x^5+x^2+4.0x-4.0";
-		String actual=p.toString();
-		assertEquals(expected,actual);
+		p = new Polynom("x^2+4x-4");
+		Monom[] monoms = {new Monom("16.2"),new Monom("3x^3"),new Monom("-2x^2")};		
+		p1 = new Polynom("3x^3-x^2+4x+12.2");
+		for(Monom m1 : monoms)
+			p.add(m1);
+		assertEquals(true, p.equals(p1));
 	}
 
 	@Test
 	void testSubstract() 
 	{
-		p=new Polynom("x^2+4x-4");
-		p1= new Polynom("x^2+4x-4");
-		p.substract(p1);
-		String expected="0";
-		String actual=p.toString();
-		assertEquals(expected,actual);
+		p = new Polynom("x^2+4x");
+		p1 = new Polynom("x^2+3+1");
+		Polynom p3 = new Polynom("-4x+4");
+		p1.substract(p);
+		assertEquals(p3.toString(),p1.toString());
 	}
 
 	@Test
@@ -90,7 +102,7 @@ class PolynomTest
 		p.multiply(p1);
 		String expected="x^4+8.0x^3+8.0x^2-32.0x+16.0";
 		String actual=p.toString();
-		assertEquals(expected,actual);
+		assertEquals(p.toString(),actual);
 	}
 
 	@Test
@@ -142,15 +154,33 @@ class PolynomTest
 			actual=true;
 		assertTrue(actual);
 	}
-
-
 	@Test
 	void testToString() 
 	{
-		p=new Polynom("0x^5+12x^1+2x^4-x^2+9-9+9-45x^78");
-		String expected = "-45.0x^78+2.0x^4-x^2+12.0x+9.0";
-		String actual=p.toString();
-		assertEquals(expected, actual);
+		p=new Polynom("-0+0.1x^5+12x^1+2x^4-x^2+9-9+9-45x^78-0x");
+		String expected = "-45.0x^78+0.1x^5+2.0x^4-x^2+12.0x+9.0";
+		Polynom p1=new Polynom("12x^1-0x+0x+0x+0");
+		String expected1 = "12.0x";
+		
+		assertEquals(expected, p.toString());
+		assertEquals(expected1, p1.toString());
+
+	}
+	void testPolynomStringBad()
+	{
+		String[] bad = {"2x3","3x-^2.1","2x^1.5+x^3+2x","xx","3Xx^"};
+			for(int i=0;i<bad.length ;i++)
+		{
+			try
+			{
+				p = new Polynom(bad[i]);
+				fail("you could init from ("+bad[i]+"), the monom is: "+p.toString());
+			}
+			catch(Exception e)
+			{
+				//Success
+			}
+		}
 	}
 
 }

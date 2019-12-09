@@ -77,7 +77,7 @@ public class Monom implements function
 			int pow=0;
 			double coef=0;
 			String t="";
-			if(s.charAt(i)=='0'&& s.length()==1)
+			if(s.charAt(i)=='0'&& s.length()==1 )
 			{
 				getNewZeroMonom();
 				return;
@@ -91,7 +91,7 @@ public class Monom implements function
 				Double d = Double.parseDouble(t);
 				coef=d;
 			}
-			if(s.contains("x"))
+			if(s.contains("x") && !t.equals("0") )
 			{
 				coef = coef==0 ? 1 : coef;
 				i++;
@@ -111,8 +111,14 @@ public class Monom implements function
 			else 
 				pow = x? 1:0;
 			if (!flag) coef*= -1;
+			if(coef==0)
+			{
+				getNewZeroMonom();
+				return;
+			}
 			this.set_coefficient(coef);
 			this.set_power(pow);
+		
 		}
 		catch (NumberFormatException e)
 		{
