@@ -1,7 +1,15 @@
 package Ex1Testing;
 
 import static org.junit.Assert.*;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Iterator;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import Ex1.ComplexFunction;
@@ -84,42 +92,48 @@ class Functions_GUITest
 	@Test
 	void testFunctions_GUI() 
 	{
-		Functions_GUI fG=new Functions_GUI();
-		fG.add(new Polynom("x ^4 -9 x^2"));
 	}
 
 	@Test
 	void testInitFromFile() 
 	{
-		String fileName = "function_file.txt";
-		String filePath="C:\\Users\\אלחנן מהצרי\\eclipse-workspace\\OOP\\Ex1\\";
-		try
-		{
-			_data.initFromFile(filePath+fileName);
-		}
-		catch(IOException e)
-		{
-			assertFalse(false);
-			e.printStackTrace();
-		}
-		assertTrue(true);
+//		String fileName = "function_file.txt";
+//		String filePath="C:\\Users\\אלחנן מהצרי\\eclipse-workspace\\OOP\\Ex1\\";
+//		try
+//		{
+//			_data.initFromFile(filePath+fileName);
+//		}
+//		catch(IOException e)
+//		{
+//			assertFalse(false);
+//			e.printStackTrace();
+//		}
+//		assertTrue(true);
 	}
 
 	@Test
-	void testSaveToFile() 
+	void testSaveToFile()  
 	{
-		String fileName ="functions.txt";
-		String filePath="";
 		try
 		{
-			_data.saveToFile(filePath+fileName);
+		_data.saveToFile("test.txt");
+		//_data.initFromFile(file);
+		Functions_GUI test=new Functions_GUI();
+		test.initFromFile("test.txt");
+		
+		if(!test.containsAll(_data))
+		{
+			assertFalse(false);
+		}
+		assertTrue(true);
 		}
 		catch(IOException e)
 		{
 			e.printStackTrace();
 		}
-		assertTrue(true);
 	}
+
+	
 
 	@Test
 	void testDrawFunctions() 
