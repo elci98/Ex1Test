@@ -73,7 +73,7 @@ public class Monom implements function
 		try {
 			boolean x=false;
 			boolean flag = isPositive(s);
-			int i= flag ? 0 : 1;
+			int i= (flag && s.charAt(0)!=' ' && s.charAt(0)!='+') ? 0 : 1;
 			int pow=0;
 			double coef=0;
 			String t="";
@@ -82,7 +82,7 @@ public class Monom implements function
 				getNewZeroMonom();
 				return;
 			}
-			while(i<s.length()&& s.charAt(i)< 58 && s.charAt(i)> 47 ||i<s.length()&& s.charAt(i)=='.')
+			while(i<s.length()&& (s.charAt(i)< 58 && s.charAt(i)> 47 ||s.charAt(i)==' ') ||i<s.length()&& s.charAt(i)=='.' )
 			{
 				if(s.charAt(i)!=' ')
 					t+=s.charAt(i++);
