@@ -154,8 +154,8 @@ public class Functions_GUI implements functions
 		while(i.hasNext())
 		{
 			function f= i.next();
-			buffer.write(f.toString()+"\n");
-
+			buffer.write(f.toString());
+			buffer.newLine();
 		}
 		buffer.close();	
 	}
@@ -166,15 +166,13 @@ public class Functions_GUI implements functions
 		double Xmin=rx.get_min(),Xmax=rx.get_max(),Ymax=ry.get_max(),Ymin=ry.get_min();
 		double xAxis=Xmax-Xmin;
 		double yAxis=Ymax-Ymin;
-		double Xavg=(Xmax+Xmin)/2;
-		double Yavg=(Ymax+Ymin)/2;
 		Color[] Colors= {Color.GREEN,Color.BLUE,Color.CYAN,Color.RED,Color.GRAY,Color.BLACK,Color.LIGHT_GRAY,Color.MAGENTA,Color.ORANGE,Color.PINK,Color.DARK_GRAY,Color.YELLOW};
 		StdDraw.setCanvasSize(width,height); // sets the width and the height of the window
 		StdDraw.setXscale(Xmin,Xmax);
 		StdDraw.setYscale(Ymin,Ymax);
 		StdDraw.setPenColor(Color.BLACK);
 		StdDraw.setPenRadius(0.03);
-		StdDraw.point(0,0); // draw (Xavg,Yavg) point
+		StdDraw.point(0,0); // draw (0,0) point
 		StdDraw.setPenRadius(0.005);
 		StdDraw.line(Xmin,0,Xmax,0);// x axis line draw
 		StdDraw.line(0,Ymin,0,Ymax);//y axis line draw
@@ -202,7 +200,6 @@ public class Functions_GUI implements functions
 				StdDraw.line(x0, collection.get(i).f(x0),x0+Step,collection.get(i).f(x0+Step));
 				x0+=Step;
 			}
-			
 		}
 
 	}

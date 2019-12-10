@@ -1,13 +1,9 @@
 package Ex1Testing;
 
 import static org.junit.Assert.*;
-
 import java.io.IOException;
-
-import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import Ex1.ComplexFunction;
 import Ex1.Functions_GUI;
 import Ex1.Monom;
@@ -57,7 +53,7 @@ class Functions_GUITest
 		//			e.printStackTrace();
 		//		}
 		//		System.out.println(data);
-		int w=1000, h=600, res=1000;
+		int w=1000, h=600, res=200;
 		Range rx = new Range(-10,10);
 		Range ry = new Range(-5,15);
 		data.drawFunctions(w,h,rx,ry,res);
@@ -156,11 +152,9 @@ class Functions_GUITest
 		ComplexFunction cf = new ComplexFunction("plus", p1,p2);
 		ComplexFunction cf4 = new ComplexFunction("div", new Polynom("x+1"),cf3);
 		Polynom max =new Polynom("x^2+2");
-		ComplexFunction cf1 = new ComplexFunction(max);
 		cf4.plus(new Monom("2"));
 		ans.add(cf.copy());
 		ans.add(cf4.copy());
-		function cf7 = cf3.initFromString("x^6");
 		cf.div(p1);
 		ans.add(cf.copy());
 		function cf5 = cf4.initFromString(s1);

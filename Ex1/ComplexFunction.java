@@ -1,5 +1,7 @@
 package Ex1;
 
+import java.io.IOException;
+
 @SuppressWarnings("serial")
 public class ComplexFunction implements complex_function 
 {
@@ -16,8 +18,23 @@ public class ComplexFunction implements complex_function
 	}
 	public ComplexFunction(String Operator,function left,function right)
 	{
-		Operator=ConvertOp(Operator);
-		Operation operator=Operation.valueOf(Operator);
+		String temp=Operator;
+		Operation operator=Operation.None;
+		try
+		{
+			Operator=ConvertOp(Operator);
+			operator=Operation.valueOf(Operator);
+			if(Operator=="Error")
+				throw new IOException("invalid Operation input");
+		}
+		catch(IllegalArgumentException e)
+		{
+			operator=Operation.valueOf(temp);
+		} 
+		catch (IOException e) 
+		{
+			e.printStackTrace();
+		}
 		_root=new CFNode(operator,left,right);
 	}
 	@Override
@@ -145,7 +162,7 @@ public class ComplexFunction implements complex_function
 			return new Polynom(s);
 		else if(!s.contains(",")) 
 			return new Monom(s);
-
+		String temp="";
 		String Operator="",rightFunc="",leftFunc="",string="";
 		CFNode root=new CFNode();
 		int sLength=s.length()-1,k=0;
@@ -158,7 +175,7 @@ public class ComplexFunction implements complex_function
 		{
 			string+=s.charAt(k++);
 		}
-		
+
 		switch(s.charAt(k))
 		{
 		case '(':
@@ -178,22 +195,48 @@ public class ComplexFunction implements complex_function
 
 			leftFunc=string;
 			rightFunc=s.substring(++k,sLength);
+			temp=Operator;
 			Operator=ConvertOp(Operator);
-			root._op=Operation.valueOf(Operator);
+
 			break;
 		}
 		case ',':
 		{
 			leftFunc=string;
 			rightFunc=s.substring(++k,sLength);
+			temp=Operator;
 			Operator=ConvertOp(Operator);
-			root._op=Operation.valueOf(Operator);
 			break;
 		}
 
 		}
+		/*in case we converted good operation to bad string
+		 * for example Times to mul
+		 * */
+		try 
+		{
+			root._op=Operation.valueOf(Operator);
+		}
+		catch(IllegalArgumentException e)
+		{
+			root._op=Operation.valueOf(temp);
+		}
 		root._left=initFromString(leftFunc);
 		root._right=initFromString(rightFunc);
+		if(root._op==Operation.Error)
+		{
+			/*in case we got invalid operation throw IOExecption
+			 * for example 'pplus'
+			 * */
+			try 
+			{
+					throw new IOException("invaild Operation input");
+			} 
+			catch (IOException e) 
+			{
+				e.printStackTrace();
+			}
+		}
 		return new ComplexFunction(root);
 	}
 
@@ -208,7 +251,7 @@ public class ComplexFunction implements complex_function
 		function f= initFromString(_root.toString());
 		return f;
 	}
-	private String ConvertOp(String Operator) 
+	private static String ConvertOp(String Operator) 
 	{
 		switch(Operator)
 		{
@@ -236,9 +279,33 @@ public class ComplexFunction implements complex_function
 		{	
 			return "Min";
 		}
+		case "Comp":
+		{
+			return "comp";
+		}
+		case "Times":
+		{
+			return "mul";
+		}
+		case "Divid":
+		{
+			return "div";
+		}
+		case "Plus":
+		{
+			return "plus";
+		}
+		case "Max":
+		{
+			return "max";
+		}
+		case "Min":
+		{	
+			return "min";
+		}
 		default:
-			return "None";
-	}
+			return "Error";
+		}
 	}
 	/*
 	 * equals function compares current function f(x) values to f1(x) values between closed interval [x0,x1]
@@ -287,45 +354,13 @@ public class ComplexFunction implements complex_function
 		}
 		String get_op() 
 		{
-			return ConvertOpString(_op);
+			return ConvertOp(_op.toString());
 		}
 		public String toString() 
 		{
 			if(_right!=null && _op!= Operation.None) // i.e ComplexFunction
-				return  ConvertOpString(_op)+"("+_left + ","+ _right +")";
+				return  ConvertOp(_op.toString())+"("+_left + ","+ _right +")";
 			return _left+"";
-		}
-		private String ConvertOpString(Operation op) 
-		{
-			switch(op)
-			{
-			case Comp:
-			{
-				return "comp";
-			}
-			case Times:
-			{
-				return "mul";
-			}
-			case Divid:
-			{
-				return "div";
-			}
-			case Plus:
-			{
-				return "plus";
-			}
-			case Max:
-			{
-				return "max";
-			}
-			case Min:
-			{	
-				return "min";
-			}
-			default:
-				return "None";
-		}
 		}
 	}
 

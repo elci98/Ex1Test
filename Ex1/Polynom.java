@@ -149,12 +149,14 @@ public class Polynom implements Polynom_able
 		Iterator<Monom> i=this.iteretor();
 		while(i.hasNext()) 
 		{
-			i.next().multiply(m1);
+			Monom m = i.next();
+			m.multiply(m1);
 		}
 	}
-	public boolean equals(Polynom_able p1) 
+	@Override
+	public boolean equals(Object p1) 
 	{
-
+		p1=(Polynom)p1;
 		return this.toString().equals(p1.toString());
 	}
 	@Override
@@ -255,13 +257,10 @@ public class Polynom implements Polynom_able
 		function f=new Polynom(s);
 		return f;
 	}
-	public static void main(String[]a)
+	public static void main(String []args)
 	{
-		Polynom p=new Polynom("x^2+4x-4");
-		Polynom p1= new Polynom("x^2+4x-4");
-		p.substract(p1);
-//		String expected="0";
-		String actual=p.toString();
-		System.out.println(actual);
+		Polynom p=new Polynom("x^5+9x^4-2x");
+		Polynom_able p2=p.copy();
+		System.out.println(p2.equals(p));
 	}
 }

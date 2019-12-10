@@ -119,7 +119,10 @@ public class Monom implements function
 				getNewZeroMonom();
 				return;
 			}
-			this.set_coefficient(coef);
+			if(Math.abs(coef-Math.round(coef))<0.0001)
+				this.set_coefficient(Math.round(coef));
+			else 
+				this.set_coefficient(coef);
 			this.set_power(pow);
 		
 		}
