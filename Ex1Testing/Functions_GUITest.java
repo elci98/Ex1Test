@@ -132,22 +132,6 @@ class Functions_GUITest
 			e.printStackTrace();
 		}
 	}
-
-	
-
-	@Test
-	void testDrawFunctions() 
-	{
-		//_data.drawFunctions();
-		//	fail("Not yet implemented");
-	}
-
-	@Test
-	void testDrawFunctionsIntIntRangeRangeInt() 
-	{
-		//		_data.drawFunctions();
-		//fail("Not yet implemented");
-	}
 	public static Functions_GUI FunctionsFactory() 
 	{
 		Functions_GUI ans = new Functions_GUI();
