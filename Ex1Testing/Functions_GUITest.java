@@ -54,7 +54,7 @@ class Functions_GUITest
 
 		//		try
 		//		{
-		//			data.initFromFile("C:\\Users\\××œ×—× ×Ÿ ××”×¦×¨×™\\eclipse-workspace\\OOP\\Ex1\\function_file.txt");
+		//			data.initFromFile("C:\\Users\\àìçğï îäöøé\\eclipse-workspace\\OOP\\Ex1\\function_file.txt");
 		//		}
 		//		catch(IOException e)
 		//		{
@@ -98,7 +98,7 @@ class Functions_GUITest
 	void testInitFromFile() 
 	{
 //		String fileName = "function_file.txt";
-//		String filePath="C:\\Users\\××œ×—× ×Ÿ ××”×¦×¨×™\\eclipse-workspace\\OOP\\Ex1\\";
+//		String filePath="C:\\Users\\àìçğï îäöøé\\eclipse-workspace\\OOP\\Ex1\\";
 //		try
 //		{
 //			_data.initFromFile(filePath+fileName);
@@ -131,6 +131,16 @@ class Functions_GUITest
 		{
 			e.printStackTrace();
 		}
+	}
+	void testDrawFunctions() {
+		//_data.drawFunctions();
+	//	fail("Not yet implemented");
+	}
+
+	@Test
+	void testDrawFunctionsIntIntRangeRangeInt() {
+		_data.drawFunctions("GUI_params.txt");
+		//fail("Not yet implemented");
 	}
 	public static Functions_GUI FunctionsFactory() 
 	{
