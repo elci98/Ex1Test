@@ -189,15 +189,18 @@ public class Functions_GUI implements functions
 			StdDraw.line(i, Ymin,i , Ymax);
 			StdDraw.textRight(i, 0, Integer.toString((int)i));//yAxis numbers
 		}
-		StdDraw.setPenRadius(0.005);
-		
+		StdDraw.setPenRadius(0.00358);
+		double Step=xAxis/resolution;
 		for(int i=0;i<collection.size();i++)// function drawing
 		{
-			double Step=xAxis/resolution,x0=Xmin;
-			StdDraw.setPenColor(Colors[i*4%Colors.length]);
+			double x0=Xmin;
+			StdDraw.setPenColor(Colors[i%Colors.length]);
 			while(x0<Xmax)
 			{
-				StdDraw.line(x0, collection.get(i).f(x0),x0+Step,collection.get(i).f(x0+Step));
+				double y0=(double)Math.round(collection.get(i).f(x0) * 10000000000000000d) / 10000000000000000d;
+				double y1 =(double)Math.round(collection.get(i).f(x0+Step) * 10000000000000000d) / 10000000000000000d;
+				StdDraw.line(x0, y0,x0+Step,y1);
+				System.out.println(collection.get(i).f(x0));
 				x0+=Step;
 			}
 		}
@@ -212,14 +215,7 @@ public class Functions_GUI implements functions
 		try 
 		{
 			obj=parser.parse(new FileReader(json_file)); // parse json file by parameters @throws ParseException,IOException
-		} 
-		catch (IOException |  ParseException e) 
-		{
-			e.printStackTrace();
-		}
-		JSONObject jo = (JSONObject) obj; // down casting obj from Object to JSONObject
-		try
-		{
+			JSONObject jo = (JSONObject) obj; // down casting obj from Object to JSONObject
 			long Width = (long)jo.get("Width"); // pulling Width value from json long casting is a must
 			long Height=(long)jo.get("Height");
 			long Resolution=(long)jo.get("Resolution");
@@ -231,14 +227,19 @@ public class Functions_GUI implements functions
 			long Ymin=(long)ja.get(0);
 			long Ymax=(long)ja.get(1);
 			Range ry=new Range((double)Ymin,(double)Ymax);
+			// call drawFunctions with the values we`ve got, with casting to fit function deceleration
 			drawFunctions((int)Width, (int)Height, rx, ry, (int)Resolution);
-		}
-		catch(NullPointerException e)
+		} 
+		catch (IOException | ParseException | NullPointerException e) 
 		{
-			throw new NullPointerException("json wrong parmeter");
+			int w=1000, h=600, res=200;
+			Range rx = new Range(-10,10);
+			Range ry = new Range(-5,15);
+			drawFunctions(w,h,rx,ry,res);
+			if(e instanceof NullPointerException)
+				throw new NullPointerException("json invalid parameter");
+			e.printStackTrace();
 		}
-		// calling the drawFunctions with the values we`ve got, with casting to fit function deceleration
-		 
 	}
 	public String toString()
 	{
