@@ -119,16 +119,18 @@ class ComplexFunctionTest
 	@Test
 	void testInitFromString() 
 	{
-		function f1=null;
 		ComplexFunction cf=new ComplexFunction(new Monom("0"));
 		//init a function from string with operation: mul, div ,plus ...
 		String methodString="mul(6x^7+2x-1,plus(x^2+4x-4,x^9))"; 
 		f=cf.initFromString(methodString);
+		String expected="mul(6.0x^7+2.0x-1.0,plus(x^2+4.0x-4.0,x^9))";
+		String actual=f.toString();
+		assertEquals(expected, actual);
 		//init a function from string with operation: Times, Divid ,Plus ...
 		String OperationString ="Times(6x^7+2x-1,Plus(x^2+4x-4,x^9))";
-		f1=cf.initFromString(OperationString);
-		String expected="mul(6.0x^7+2.0x-1.0,plus(x^2+4.0x-4.0,x^9))mul(6.0x^7+2.0x-1.0,plus(x^2+4.0x-4.0,x^9))";
-		String actual=f.toString()+f1.toString();
+		f=cf.initFromString(OperationString);
+		expected="mul(6.0x^7+2.0x-1.0,plus(x^2+4.0x-4.0,x^9))";
+		actual=f.toString();
 		assertEquals(expected, actual);
 	}
 
@@ -144,14 +146,29 @@ class ComplexFunctionTest
 		String actual=f.toString();
 		String expected=cf.toString();
 		assertEquals(expected, actual);
+		assertTrue(cf.equals(f));
 	}
 
 	@Test
-	void testEqualsFunctionDoubleDoubleDouble() 
+	void testEqualsObject() 
 	{
-		
-		//still not implemented
-		
+		p1=new Polynom("x+2");
+		p=new Polynom("x+2");
+		cf=new ComplexFunction("mul",p,p1);
+		f=new Polynom("x^2+4x+4");
+		assertTrue(cf.equals(f));
+		//---------
+		p1=new Polynom("3x");
+		m=new Monom("4x");
+		cf=new ComplexFunction("plus",m,p1);
+		f=new Polynom("7x");
+		assertTrue(cf.equals(f));
+		//----------
+		p1=new Polynom("x+2");
+		p=new Polynom("x+2");
+		cf=new ComplexFunction("plus",p,p1);
+		f=new Polynom("2x+5");
+		assertFalse(cf.equals(f));
 	}
 
 }

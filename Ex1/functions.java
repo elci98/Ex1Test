@@ -11,7 +11,7 @@ public interface functions extends Collection<function>
 	/**
 	 * Init a new collection of functions from a file
 	 * @param file - the file name
-	 * @throws IOException if the file does not exists of unreadable (wrong format)
+	 * @throws IOException if the file does not exists or unreadable (wrong format)
 	 */
 	public void initFromFile(String file) throws IOException;
 /**

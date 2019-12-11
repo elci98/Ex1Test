@@ -156,7 +156,6 @@ public class Polynom implements Polynom_able
 	@Override
 	public boolean equals(Object p1) 
 	{
-		p1=(Polynom)p1;
 		return this.toString().equals(p1.toString());
 	}
 	@Override

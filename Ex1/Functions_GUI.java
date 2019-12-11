@@ -11,15 +11,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import org.json.simple.*;
+import org.json.simple.parser.*;
 
 public class Functions_GUI implements functions 
 {
-
 	ArrayList<function> collection= new ArrayList<function>();
 	public Functions_GUI()
 	{
@@ -31,15 +27,18 @@ public class Functions_GUI implements functions
 			return collection.get(index);
 		return null;
 	}
+	
 	public boolean add(function arg0) 
 	{
 		collection.add(arg0);
 		return true;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public boolean addAll(Collection<? extends function> arg0) 
 	{
+		arg0=(Collection<function>)arg0;
 		collection.addAll(arg0);
 		return true;
 	}
@@ -77,7 +76,6 @@ public class Functions_GUI implements functions
 	@Override
 	public boolean remove(Object arg0) 
 	{
-		arg0=(function)arg0;
 		if(!collection.contains(arg0))
 		{
 			System.out.println("collection do not contain such function");
@@ -86,11 +84,9 @@ public class Functions_GUI implements functions
 		return collection.remove(arg0);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public boolean removeAll(Collection<?> arg0) 
 	{
-		arg0=(Collection<function>)arg0;
 		Iterator<function> i = collection.iterator();
 		while(i.hasNext())
 		{
@@ -104,11 +100,9 @@ public class Functions_GUI implements functions
 		return collection.removeAll(arg0);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public boolean retainAll(Collection<?> arg0) 
 	{
-		arg0=(Collection<function>)arg0;
 		return collection.retainAll(arg0);
 	}
 
@@ -197,10 +191,10 @@ public class Functions_GUI implements functions
 			StdDraw.setPenColor(Colors[i%Colors.length]);
 			while(x0<Xmax)
 			{
+				//here we limit the number of digits after the floating point to 16 digits to prevent inaccuracy
 				double y0=(double)Math.round(collection.get(i).f(x0) * 10000000000000000d) / 10000000000000000d;
 				double y1 =(double)Math.round(collection.get(i).f(x0+Step) * 10000000000000000d) / 10000000000000000d;
 				StdDraw.line(x0, y0,x0+Step,y1);
-				System.out.println(collection.get(i).f(x0));
 				x0+=Step;
 			}
 		}

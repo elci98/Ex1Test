@@ -2,22 +2,10 @@ package Ex1Testing;
 
 import static org.junit.Assert.*;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Iterator;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import Ex1.ComplexFunction;
-import Ex1.Functions_GUI;
-import Ex1.Monom;
-import Ex1.Polynom;
-import Ex1.Range;
-import Ex1.function;
+import Ex1.*;
 /**
  * Partial JUnit + main test for the GUI_Functions class, expected output from the main:
  * 0) java.awt.Color[r=0,g=0,b=255]  f(x)= plus(-1.0x^4 +2.4x^2 +3.1,+0.1x^5 -1.2999999999999998x +5.0)
@@ -28,55 +16,19 @@ import Ex1.function;
 5) java.awt.Color[r=0,g=255,b=0]  f(x)= max(max(max(max(plus(-1.0x^4 +2.4x^2 +3.1,+0.1x^5 -1.2999999999999998x +5.0),plus(div(+1.0x +1.0,mul(mul(+1.0x +3.0,+1.0x -2.0),+1.0x -4.0)),2.0)),div(plus(-1.0x^4 +2.4x^2 +3.1,+0.1x^5 -1.2999999999999998x +5.0),-1.0x^4 +2.4x^2 +3.1)),-1.0x^4 +2.4x^2 +3.1),+0.1x^5 -1.2999999999999998x +5.0)
 6) java.awt.Color[r=255,g=175,b=175]  f(x)= min(min(min(min(plus(-1.0x^4 +2.4x^2 +3.1,+0.1x^5 -1.2999999999999998x +5.0),plus(div(+1.0x +1.0,mul(mul(+1.0x +3.0,+1.0x -2.0),+1.0x -4.0)),2.0)),div(plus(-1.0x^4 +2.4x^2 +3.1,+0.1x^5 -1.2999999999999998x +5.0),-1.0x^4 +2.4x^2 +3.1)),-1.0x^4 +2.4x^2 +3.1),+0.1x^5 -1.2999999999999998x +5.0)
 
- * @author boaz_benmoshe
  *
  */
 class Functions_GUITest 
 {
 	public static void main(String[] a) 
 	{
-		Functions_GUI data=FunctionsFactory();
-		//				Functions_GUI data= new Functions_GUI();
-		//		Polynom p = new Polynom("x^2");
-		//		Polynom p1 = new Polynom("x^9");
-		//		Polynom p2 = new Polynom("x^1");
-		//		Polynom p3 = new Polynom("x^3-4x+8");
-		//		Polynom p4 = new Polynom("x^9-2x^4");
-		//		Polynom p5 = new Polynom("x^3");
-		//		data.add(p);
-		//		data.add(p1);
-		//		data.add(p2);
-		//		data.add(p3);
-		//		data.add(p4);
-		//		data.add(p5);
-		//				System.out.println(c.equals(p1, -3, 3, 0.1));
-
-
-		//		try
-		//		{
-		//			data.initFromFile("C:\\Users\\‡ÏÁÔ Ó‰ˆ¯È\\eclipse-workspace\\OOP\\Ex1\\function_file.txt");
-		//		}
-		//		catch(IOException e)
-		//		{
-		//			e.printStackTrace();
-		//		}
-		//		System.out.println(data);
-		int w=1000, h=600, res=200;
-		Range rx = new Range(-10,10);
-		Range ry = new Range(-5,15);
-		data.drawFunctions(w,h,rx,ry,res);
-		System.out.println(data.get(1).f(4.01));
-		//data.drawFunctions("Ex1//GUI_params.json");
-		//		System.out.println(data);
-		//		String fileName="functions.txt";
-		//		try 
-		//		{
-		//			data.saveToFile(fileName);
-		//		}
-		//		catch(IOException e)
-		//		{
-		//			e.printStackTrace();
-		//		}
+//		Functions_GUI data=FunctionsFactory();
+		//Functions_GUI data= new Functions_GUI();
+//		int w=1000, h=600, res=200;
+//		Range rx = new Range(-10,10);
+//		Range ry = new Range(-5,15);
+		//data.drawFunctions(w,h,rx,ry,res);
+		//data.drawFunctions("Ex1//GUI_params.jsn");
 	}
 	private Functions_GUI _data=null;
 	//	@BeforeAll
@@ -97,18 +49,18 @@ class Functions_GUITest
 	@Test
 	void testInitFromFile() 
 	{
-//		String fileName = "function_file.txt";
-//		String filePath="C:\\Users\\‡ÏÁÔ Ó‰ˆ¯È\\eclipse-workspace\\OOP\\Ex1\\";
-//		try
-//		{
-//			_data.initFromFile(filePath+fileName);
-//		}
-//		catch(IOException e)
-//		{
-//			assertFalse(false);
-//			e.printStackTrace();
-//		}
-//		assertTrue(true);
+		//		String fileName = "function_file.txt";
+		//		String filePath="C:\\Users\\◊ê◊ú◊ó◊†◊ü ◊û◊î◊¶◊®◊ô\\eclipse-workspace\\OOP\\Ex1\\";
+		//		try
+		//		{
+		//			_data.initFromFile(filePath+fileName);
+		//		}
+		//		catch(IOException e)
+		//		{
+		//			assertFalse(false);
+		//			e.printStackTrace();
+		//		}
+		//		assertTrue(true);
 	}
 
 	@Test
@@ -116,31 +68,19 @@ class Functions_GUITest
 	{
 		try
 		{
-		_data.saveToFile("test.txt");
-		//_data.initFromFile(file);
-		Functions_GUI test=new Functions_GUI();
-		test.initFromFile("test.txt");
-		
-		if(!test.containsAll(_data))
-		{
-			assertFalse(false);
-		}
-		assertTrue(true);
+			_data.saveToFile("test.txt");
+			Functions_GUI test=new Functions_GUI();
+			test.initFromFile("test.txt");
+			if(!test.containsAll(_data))
+			{
+				assertFalse(false);
+			}
+			assertTrue(true);
 		}
 		catch(IOException e)
 		{
 			e.printStackTrace();
 		}
-	}
-	void testDrawFunctions() {
-		//_data.drawFunctions();
-	//	fail("Not yet implemented");
-	}
-
-	@Test
-	void testDrawFunctionsIntIntRangeRangeInt() {
-		_data.drawFunctions("GUI_params.txt");
-		//fail("Not yet implemented");
 	}
 	public static Functions_GUI FunctionsFactory() 
 	{

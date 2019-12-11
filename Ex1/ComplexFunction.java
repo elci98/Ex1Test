@@ -5,17 +5,18 @@ import java.io.IOException;
 @SuppressWarnings("serial")
 public class ComplexFunction implements complex_function 
 {
-
 	private CFNode _root;
 
 	private ComplexFunction(CFNode root)
 	{
 		_root=root;
 	}
+	
 	public ComplexFunction(function left)
 	{
 		_root=new CFNode(left);
 	}
+	
 	public ComplexFunction(String Operator,function left,function right)
 	{
 		String temp=Operator;
@@ -37,6 +38,7 @@ public class ComplexFunction implements complex_function
 		}
 		_root=new CFNode(operator,left,right);
 	}
+	
 	@Override
 	public void plus(function f1) 
 	{
@@ -113,6 +115,7 @@ public class ComplexFunction implements complex_function
 			return Operation.valueOf(_root.get_op());
 		return null;
 	}
+	
 	@Override
 	public double f(double x) 
 	{
@@ -245,12 +248,14 @@ public class ComplexFunction implements complex_function
 	{
 		return _root.toString();
 	}
+	
 	@Override
 	public function copy() 
 	{
 		function f= initFromString(_root.toString());
 		return f;
 	}
+	
 	private static String ConvertOp(String Operator) 
 	{
 		switch(Operator)
@@ -309,15 +314,23 @@ public class ComplexFunction implements complex_function
 	}
 	/*
 	 * equals function compares current function f(x) values to f1(x) values between closed interval [x0,x1]
+	 *         with epsilon accuracy. 
 	 *         when x belongs to [x0,x1] and we increase x`s value by step value
 	 * */
-	public boolean equals(function f1,double x0,double x1,double step)
+	@Override
+	public boolean equals(Object obj)
 	{
+		double x0=-10,x1=10,step=0.01;
+		return this.equals((function)obj,x0,x1,step);
+	}
+	private boolean equals(function f1,double x0,double x1,double step)
+	{
+		double epsilon=0.0001;
 		if(x0>=x1)throw new RuntimeException("x0`s value must be smaller then x1!!" );
 		if(step>(x1-x0)/2)throw new RuntimeException("step value must be <= (x1-x0)/2");
 		while(x0<=x1)
 		{
-			if(this.f(x0)!=f1.f(x0))
+			if(Math.abs(this.f(x0)-f1.f(x0))>epsilon)
 				return false;
 			x0+=step;
 		}
@@ -363,5 +376,4 @@ public class ComplexFunction implements complex_function
 			return _left+"";
 		}
 	}
-
 }
