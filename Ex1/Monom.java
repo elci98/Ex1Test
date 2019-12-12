@@ -65,15 +65,18 @@ public class Monom implements function
 	{
 		return this.get_coefficient() == 0;
 	}
-	// *********************** add your code below **********************
+	
 	public Monom(String s) 
 	{
+		if(s.contains(" "))
+			s=s.replace(" ", "");
 		if(s==null)throw new RuntimeException("string is null!");
 		if(s=="")throw new RuntimeException("string is empty!");
-		try {
+		try 
+		{
 			boolean x=false;
 			boolean flag = isPositive(s);
-			int i= (flag && s.charAt(0)!=' ' && s.charAt(0)!='+') ? 0 : 1;
+			int i= (flag && s.charAt(0)!='+') ? 0 : 1;
 			int pow=0;
 			double coef=0;
 			String t="";
@@ -82,31 +85,34 @@ public class Monom implements function
 				getNewZeroMonom();
 				return;
 			}
-			while(i<s.length()&& (s.charAt(i)< 58 && s.charAt(i)> 47 ||s.charAt(i)==' ') ||i<s.length()&& s.charAt(i)=='.' )
+			while(i<s.length()&& s.charAt(i)< 58 && s.charAt(i)> 47  ||i<s.length()&& s.charAt(i)=='.' )
 			{
-				if(s.charAt(i)!=' ')
-					t+=s.charAt(i++);
+				t+=s.charAt(i++);
 			}
 			if(t!="")
 			{
 				Double d = Double.parseDouble(t);
 				coef=d;
 			}
-			if(s.contains("x") && !t.equals("0") )
+			
+			if(s.contains("x")&& !t.equals("0"))
 			{
 				coef = coef==0 ? 1 : coef;
-				i++;
 				x=true;
 			}
+			if(coef==0)
+			{
+				getNewZeroMonom();
+				return;
+			}
+			i++;
 			if(s.contains("^"))
 			{
 				i++;
 				t="";
 				while(i<s.length())
 				{
-					if(s.charAt(i)!=' ' && s.charAt(i)!='^')
-						t+=s.charAt(i);
-					i++;
+					t+=s.charAt(i++);
 				}
 				Integer d = Integer.parseInt(t);
 				pow=d;
@@ -114,26 +120,35 @@ public class Monom implements function
 			else 
 				pow = x? 1:0;
 			if (!flag) coef*= -1;
-			if(coef==0)
-			{
-				getNewZeroMonom();
-				return;
-			}
 			if(Math.abs(coef-Math.round(coef))<0.0001)
 				this.set_coefficient(Math.round(coef));
 			else 
 				this.set_coefficient(coef);
 			this.set_power(pow);
-		
+
 		}
 		catch (NumberFormatException e)
 		{
 			throw new NumberFormatException("Power should be positive");
 		}
 	}
-	public boolean equals(Monom m)
+	/**
+	 * equals function compares current Monom f(x) values to m.f(x) values between closed interval [x0,x1]
+	 *         with epsilon accuracy. 
+	 *         when x belongs to [x0,x1] and we increase x`s value by step value
+	 * */
+	public boolean equals(Object m)
 	{
-		return this.toString().equals(m.toString());
+		double x0=-10,x1=10,step=0.01,epsilon=0.0001;
+		while(x0<=x1)
+		{
+			double y0=(double)Math.round(this.f(x0) * 10000000000000000d) / 10000000000000000d;
+			double y1 =(double)Math.round(((function)m).f(x0) * 10000000000000000d) / 10000000000000000d;
+			if(Math.abs(y0-y1)>epsilon)
+				return false;
+			x0+=step;
+		}
+		return true;
 	}
 	public void add(Monom m) 
 	{
@@ -192,7 +207,7 @@ public class Monom implements function
 	{
 		return new Monom(ZERO);
 	}
-	
+
 	@Override
 	public function initFromString(String s) 
 	{
@@ -202,8 +217,7 @@ public class Monom implements function
 	@Override
 	public function copy() 
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new Monom(this.toString());
 	}
 	private double _coefficient; 
 	private int _power;

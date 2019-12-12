@@ -28,6 +28,11 @@ class PolynomTest
 		String expected="12.0x^7+3.0x^5-4.6x+1.3";
 		String actual=p.toString();
 		assertEquals(expected,actual);
+		//same string with spaces
+		p= new Polynom("3 x ^5 +0 +    1 . 3-4 . 6x+ 1 2x ^ 7");
+		expected="12.0x^7+3.0x^5-4.6x+1.3";
+		actual=p.toString();
+		assertEquals(expected,actual);
 	}
 
 	@Test
@@ -109,7 +114,7 @@ class PolynomTest
 	}
 
 	@Test
-	void testEqualsPolynom_able() 
+	void testEqualsObject() 
 	{
 		p=new Polynom("x^2+4x-4");
 		p1= new Polynom("x^2+4x-4");

@@ -57,10 +57,41 @@ class MonomTest
 
 	@Test
 	void testMonomString() 
-	{
-		m=new Monom("+0x^5");
+	{ 
+		Monom m=new Monom("-0x^5");
+		Monom m1 = new Monom("-x^5");
+		Monom m2 = new Monom("-x");
+		Monom m3 = new Monom("x");
+		Monom m4 = new Monom("-1x");
+		Monom m5 = new Monom("4x^2");
+		Monom m6 = new Monom("2x");
+		//m
 		String expected="0";
 		String actual=m.toString();
+		assertEquals(expected, actual);
+		//m1
+		expected="-x^5";
+		actual=m1.toString();
+		assertEquals(expected, actual);
+		//m2
+		expected="-x";
+		actual=m2.toString();
+		assertEquals(expected, actual);
+		//m3
+		expected="x";
+		actual=m3.toString();
+		assertEquals(expected, actual);
+		//m4
+		expected="-x";
+		actual=m4.toString();
+		assertEquals(expected, actual);
+		//m5
+		expected="4.0x^2";
+		actual=m5.toString();
+		assertEquals(expected, actual);
+		//m6
+		expected="2.0x";
+		actual=m6.toString();
 		assertEquals(expected, actual);
 	}
 

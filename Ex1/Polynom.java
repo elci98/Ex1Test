@@ -33,6 +33,8 @@ public class Polynom implements Polynom_able
 	 */
 	public Polynom(String s) 
 	{
+		if(s.contains(" "))
+			s=s.replace(" ", "");
 		String t="";
 		for(int i=0;i<s.length();i++)
 		{
@@ -156,7 +158,16 @@ public class Polynom implements Polynom_able
 	@Override
 	public boolean equals(Object p1) 
 	{
-		return this.toString().equals(p1.toString());
+		double x0=-10,x1=10,step=0.01;
+		while(x0<=x1)
+		{
+			double y0=(double)Math.round(this.f(x0) * 10000000000000000d) / 10000000000000000d;
+			double y1 =(double)Math.round(((function)p1).f(x0) * 10000000000000000d) / 10000000000000000d;
+			if(Math.abs(y0-y1)>0.0001)
+				return false;
+			x0+=step;
+		}
+		return true;
 	}
 	@Override
 	public boolean isZero() 
@@ -255,11 +266,5 @@ public class Polynom implements Polynom_able
 	{
 		function f=new Polynom(s);
 		return f;
-	}
-	public static void main(String []args)
-	{
-		Polynom p=new Polynom("x^5+9x^4-2x");
-		Polynom_able p2=p.copy();
-		System.out.println(p2.equals(p));
 	}
 }

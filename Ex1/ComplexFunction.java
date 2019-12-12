@@ -160,6 +160,8 @@ public class ComplexFunction implements complex_function
 	@Override
 	public function initFromString(String s) 
 	{
+		if(s.contains(" "))
+			s=s.replace(" ", "");
 		//recursion stop conditions
 		if(!s.contains(",") && ( s.contains("+") || s.contains("-") ))
 			return new Polynom(s);
@@ -255,7 +257,13 @@ public class ComplexFunction implements complex_function
 		function f= initFromString(_root.toString());
 		return f;
 	}
-	
+	/**
+	 * convert methodfor example:
+	 * if Operator= 'mul'----> to 'Times' 
+	 * and
+	 * if Operator= 'Times' ----> to 'mul' to fit the constructor
+	 * 
+	 * */
 	private static String ConvertOp(String Operator) 
 	{
 		switch(Operator)
@@ -312,17 +320,18 @@ public class ComplexFunction implements complex_function
 			return "Error";
 		}
 	}
-	/*
-	 * equals function compares current function f(x) values to f1(x) values between closed interval [x0,x1]
-	 *         with epsilon accuracy. 
-	 *         when x belongs to [x0,x1] and we increase x`s value by step value
-	 * */
+	
 	@Override
 	public boolean equals(Object obj)
 	{
 		double x0=-10,x1=10,step=0.01;
 		return this.equals((function)obj,x0,x1,step);
 	}
+	/**
+	 * equals function compares current function f(x) values to f1(x) values between closed interval [x0,x1]
+	 *         with epsilon accuracy. 
+	 *         when x belongs to [x0,x1] and we increase x`s value by step value
+	 * */
 	private boolean equals(function f1,double x0,double x1,double step)
 	{
 		double epsilon=0.0001;

@@ -16,6 +16,9 @@ import org.json.simple.parser.*;
 
 public class Functions_GUI implements functions 
 {
+	/**
+	 * we chose ArrayList as our function collection
+	 * */
 	ArrayList<function> collection= new ArrayList<function>();
 	public Functions_GUI()
 	{
@@ -124,6 +127,9 @@ public class Functions_GUI implements functions
 		return collection.toArray(arg0);
 	}
 
+	/**
+	 * initliaze new collection of function from file 
+	 * */
 	@Override
 	public void initFromFile(String file) throws IOException 
 	{
@@ -137,7 +143,9 @@ public class Functions_GUI implements functions
 		}
 		buffer.close();
 	}
-
+	/**
+	 * save our current functions collection to file
+	 * */
 	@Override
 	public void saveToFile(String file) throws IOException 
 	{
@@ -153,7 +161,9 @@ public class Functions_GUI implements functions
 		}
 		buffer.close();	
 	}
-
+	/**
+	 * this methos draws the functions in a GUI window
+	 * */
 	@Override
 	public void drawFunctions(int width, int height, Range rx, Range ry, int resolution) 
 	{
@@ -200,7 +210,14 @@ public class Functions_GUI implements functions
 		}
 
 	}
-
+	/**
+	 * same method as above, 
+	 * only difference is that this method read the GUI parameters from json file.
+	 * it uses json simple to do so.
+	 * @throws IOException if file is unreadable
+	 * @throws NullPointerException if json given parameter is invalid
+	 * @throws ParseException from JSONParser
+	 * */
 	@Override
 	public void drawFunctions(String json_file) 
 	{

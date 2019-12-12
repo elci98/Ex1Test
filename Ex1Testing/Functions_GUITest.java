@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import Ex1.*;
 /**
  * Partial JUnit + main test for the GUI_Functions class, expected output from the main:
- * 0) java.awt.Color[r=0,g=0,b=255]  f(x)= plus(-1.0x^4 +2.4x^2 +3.1,+0.1x^5 -1.2999999999999998x +5.0)
+0) java.awt.Color[r=0,g=0,b=255]  f(x)= plus(-1.0x^4 +2.4x^2 +3.1,+0.1x^5 -1.2999999999999998x +5.0)
 1) java.awt.Color[r=0,g=255,b=255]  f(x)= plus(div(+1.0x +1.0,mul(mul(+1.0x +3.0,+1.0x -2.0),+1.0x -4.0)),2.0)
 2) java.awt.Color[r=255,g=0,b=255]  f(x)= div(plus(-1.0x^4 +2.4x^2 +3.1,+0.1x^5 -1.2999999999999998x +5.0),-1.0x^4 +2.4x^2 +3.1)
 3) java.awt.Color[r=255,g=200,b=0]  f(x)= -1.0x^4 +2.4x^2 +3.1
@@ -22,18 +22,31 @@ class Functions_GUITest
 {
 	public static void main(String[] a) 
 	{
-//		Functions_GUI data=FunctionsFactory();
-		//Functions_GUI data= new Functions_GUI();
-//		int w=1000, h=600, res=200;
-//		Range rx = new Range(-10,10);
-//		Range ry = new Range(-5,15);
-		//data.drawFunctions(w,h,rx,ry,res);
-		//data.drawFunctions("Ex1//GUI_params.jsn");
+		//		Functions_GUI data=FunctionsFactory();
+		Functions_GUI data= new Functions_GUI();
+		Polynom p1=new Polynom("x");
+		Polynom p2=new Polynom("x^2");
+		Polynom p3=new Polynom("x^2-4x+2");
+		Polynom p4=new Polynom("x^3");
+		Polynom p5=new Polynom("x^5-2x^3+9x^2");
+		Polynom p6=new Polynom("4x^3-2x^2");
+		Polynom p7=new Polynom("x^7");
+		Polynom p8=new Polynom("-x");
+		data.add(p1);
+		data.add(p2);
+		data.add(p3);
+		data.add(p4);
+		data.add(p5);
+		data.add(p6);
+		data.add(p7);
+		data.add(p8);
+		int w=1000, h=600, res=200;
+		Range rx = new Range(-10,10);
+		Range ry = new Range(-5,15);
+		data.drawFunctions(w,h,rx,ry,res);
+		//data.drawFunctions("Ex1//GUI_params.json");
 	}
 	private Functions_GUI _data=null;
-	//	@BeforeAll
-	//	static void setUpBeforeClass() throws Exception {
-	//	}
 
 	@BeforeEach
 	void setUp() throws Exception 
@@ -49,18 +62,21 @@ class Functions_GUITest
 	@Test
 	void testInitFromFile() 
 	{
-		//		String fileName = "function_file.txt";
-		//		String filePath="C:\\Users\\אלחנן מהצרי\\eclipse-workspace\\OOP\\Ex1\\";
-		//		try
-		//		{
-		//			_data.initFromFile(filePath+fileName);
-		//		}
-		//		catch(IOException e)
-		//		{
-		//			assertFalse(false);
-		//			e.printStackTrace();
-		//		}
-		//		assertTrue(true);
+		try
+		{
+			_data.saveToFile("test.txt");
+			Functions_GUI test=new Functions_GUI();
+			test.initFromFile("test.txt");
+			if(!test.containsAll(_data))
+			{
+				assertFalse(false);
+			}
+			assertTrue(true);
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	@Test
